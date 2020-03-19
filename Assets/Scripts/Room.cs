@@ -17,7 +17,7 @@ public class Room
 
     public RoomType type;
 
-    public Room north, east, south, west;
+    public bool north, east, south, west;
 
     public Room(Vector2 _gridPos, RoomType _type)
     {
