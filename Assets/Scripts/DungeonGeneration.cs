@@ -26,6 +26,7 @@ public class DungeonGeneration : MonoBehaviour
         gridSizeY = Mathf.RoundToInt(dungeonSize.y);
         CreateRooms();
         SetRoomDoors();
+        SelectTypes();
         DrawMap();
     }
 
@@ -41,7 +42,7 @@ public class DungeonGeneration : MonoBehaviour
     void CreateRooms()
     {
         rooms = new Room[gridSizeX * 2, gridSizeY * 2];
-        rooms[gridSizeX, gridSizeY] = new Room(Vector2.zero, RoomType.ENTRANCE_ROOM);
+        rooms[gridSizeX, gridSizeY] = new Room(Vector2.zero);
         takenPositions.Insert(0, Vector2.zero);
         Vector2 checkPos = Vector2.zero;
         float randomCompare = 0.2f, randomCompareStart = 0.2f, randomCompareEnd = 0.01f;
@@ -63,7 +64,7 @@ public class DungeonGeneration : MonoBehaviour
                     print("error: could not create with fewer neighbours than : " + NumberOfNeighbours(checkPos, takenPositions));
                 }
             }
-            rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new Room(checkPos, RoomType.EMPTY_ROOM);
+            rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new Room(checkPos);
             takenPositions.Insert(0, checkPos);
         }
     }
@@ -111,6 +112,84 @@ public class DungeonGeneration : MonoBehaviour
                 {
                     rooms[x, y].east = (rooms[x + 1, y] != null);
                 }
+            }
+        }
+    }
+
+    void SelectTypes()
+    {
+        bool hasEntrance = false;
+        bool hasBoss = false;
+        Vector2 roomPos;
+        Vector2 gridPos;
+        foreach (Room room in rooms)
+        {
+            if (room == null)
+            {
+                continue;
+            }
+            gridPos = new Vector2(room.gridPos.x, room.gridPos.y);
+            roomPos = new Vector2((int)room.gridPos.x + gridSizeX, (int)room.gridPos.y + gridSizeY);
+            if (NumberOfNeighbours(gridPos, takenPositions) == 1)
+            {
+                if (!hasEntrance)
+                {
+                    room.type = RoomType.ENTRANCE_ROOM;
+                    hasEntrance = true;
+                }
+                else if (!hasBoss)
+                {
+                    room.type = RoomType.BOSS_ROOM;
+                    hasBoss = true;
+                }
+                else
+                {
+                    room.type = RoomType.TREASURE_ROOM;
+                }
+            }
+            else if (NumberOfNeighbours(gridPos, takenPositions) == 2)
+            {
+                bool hasCorridorNeighbour = false;
+                if (room.north)
+                {
+                    if (rooms[(int)roomPos.x, (int)roomPos.y + 1].type == RoomType.CORRIDOR)
+                    {
+                        hasCorridorNeighbour = true;
+                    }
+                }
+                if (room.south)
+                {
+                    if (rooms[(int)roomPos.x, (int)roomPos.y - 1].type == RoomType.CORRIDOR)
+                    {
+                        hasCorridorNeighbour = true;
+                    }
+                }
+                if (room.east)
+                {
+                    if (rooms[(int)roomPos.x + 1, (int)roomPos.y].type == RoomType.CORRIDOR)
+                    {
+                        hasCorridorNeighbour = true;
+                    }
+                }
+                if (room.west)
+                {
+                    if (rooms[(int)roomPos.x - 1, (int)roomPos.y].type == RoomType.CORRIDOR)
+                    {
+                        hasCorridorNeighbour = true;
+                    }
+                }
+                if (!hasCorridorNeighbour && Random.value > 0.25)
+                {
+                    room.type = RoomType.CORRIDOR;
+                }
+                else
+                {
+                    room.type = RoomType.EMPTY_ROOM;
+                }
+            }
+            else
+            {
+                room.type = RoomType.EMPTY_ROOM;
             }
         }
     }
@@ -238,6 +317,7 @@ public class DungeonGeneration : MonoBehaviour
             floorBehaviour.south = room.south;
             floorBehaviour.east = room.east;
             floorBehaviour.west = room.west;
+            floorBehaviour.type = room.type;
         }
     }
 }

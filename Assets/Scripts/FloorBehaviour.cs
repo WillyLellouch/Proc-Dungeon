@@ -6,6 +6,7 @@ public class FloorBehaviour : MonoBehaviour
 {
     public GameObject northDoor, southDoor, eastDoor, westDoor;
     public bool north, south, east, west;
+    public RoomType type;
     // Start is called before the first frame update
     void Start()
     {
