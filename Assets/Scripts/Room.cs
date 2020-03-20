@@ -19,9 +19,8 @@ public class Room
 
     public bool north, east, south, west;
 
-    public Room(Vector2 _gridPos, RoomType _type)
+    public Room(Vector2 _gridPos)
     {
         gridPos = _gridPos;
-        type = _type;
     }
 }

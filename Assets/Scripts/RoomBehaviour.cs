@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FloorBehaviour : MonoBehaviour
+public class RoomBehaviour : MonoBehaviour
 {
-    public GameObject northDoor, southDoor, eastDoor, westDoor;
+    public GameObject northDoor, southDoor, eastDoor, westDoor, center;
     public bool north, south, east, west;
     public RoomType type;
     // Start is called before the first frame update

@@ -620,6 +620,7 @@ MonoBehaviour:
   south: 0
   east: 0
   west: 0
+  type: 0
 --- !u!1 &3784266200747827261
 GameObject:
   m_ObjectHideFlags: 0
