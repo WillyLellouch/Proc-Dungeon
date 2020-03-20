@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FloorBehaviour : MonoBehaviour
 {
-    public GameObject northDoor, southDoor, eastDoor, westDoor;
+    public GameObject northDoor, southDoor, eastDoor, westDoor, northWall, westWall, eastWall, southWall;
     public bool north, south, east, west;
     public RoomType type;
     // Start is called before the first frame update
@@ -14,6 +14,10 @@ public class FloorBehaviour : MonoBehaviour
         southDoor.SetActive(south);
         eastDoor.SetActive(east);
         westDoor.SetActive(west);
+        northWall.SetActive(!north);
+        westWall.SetActive(!west);
+        southWall.SetActive(!south);
+        eastWall.SetActive(!east);
     }
 
     // Update is called once per frame
@@ -23,5 +27,9 @@ public class FloorBehaviour : MonoBehaviour
         southDoor.SetActive(south);
         eastDoor.SetActive(east);
         westDoor.SetActive(west);
+        northWall.SetActive(!north);
+        westWall.SetActive(!west);
+        southWall.SetActive(!south);
+        eastWall.SetActive(!east);
     }
 }
