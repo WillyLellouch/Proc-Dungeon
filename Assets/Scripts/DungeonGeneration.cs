@@ -13,7 +13,7 @@ public class DungeonGeneration : MonoBehaviour
 
     int gridSizeX, gridSizeY, numberOfRooms = 20;
 
-    public GameObject roomFloor;
+    public GameObject small, medium, big, boss, corridor;
 
     // Start is called before the first frame update
     void Start()
@@ -304,6 +304,7 @@ public class DungeonGeneration : MonoBehaviour
 
     void DrawMap()
     {
+        GameObject roomInstance;
         foreach (Room room in rooms)
         {
             if (room == null)
@@ -311,13 +312,39 @@ public class DungeonGeneration : MonoBehaviour
                 continue;
             }
             Vector3 realPos = new Vector3(room.gridPos.x * 60, 0, room.gridPos.y * 40);
-            GameObject instance = Instantiate(roomFloor, realPos, Quaternion.identity);
-            FloorBehaviour floorBehaviour = instance.GetComponent<FloorBehaviour>();
+            switch (room.type)
+            {
+                case RoomType.CORRIDOR:
+                    roomInstance = Instantiate(corridor, realPos, Quaternion.identity);
+                    break;
+                case RoomType.ENTRANCE_ROOM:
+                    roomInstance = Instantiate(small, realPos, Quaternion.identity);
+                    break;
+                case RoomType.TREASURE_ROOM:
+                    roomInstance = Instantiate(medium, realPos, Quaternion.identity);
+                    break;
+                case RoomType.BOSS_ROOM:
+                    roomInstance = Instantiate(boss, realPos, Quaternion.identity);
+                    break;
+                default:
+                    if (Random.value > 0.4)
+                    {
+                        roomInstance = Instantiate(big, realPos, Quaternion.identity);
+                    } else if (Random.value > 0.3)
+                    {
+                        roomInstance = Instantiate(medium, realPos, Quaternion.identity);
+                    }
+                    else
+                    {
+                        roomInstance = Instantiate(small, realPos, Quaternion.identity);
+                    }
+                    break;
+            }
+            FloorBehaviour floorBehaviour = roomInstance.GetComponent<FloorBehaviour>();
             floorBehaviour.north = room.north;
             floorBehaviour.south = room.south;
             floorBehaviour.east = room.east;
             floorBehaviour.west = room.west;
-            floorBehaviour.type = room.type;
         }
     }
 }

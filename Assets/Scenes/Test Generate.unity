@@ -150,7 +150,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5da307e544417ad4ab5d78c1efacf78e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomFloor: {fileID: 3784266200378529907, guid: 31ecf3d135e2cf74eaf3908fd5f850b4,
+  small: {fileID: 6436628329572623356, guid: d2d2bd35e308f154c89d9c9cc2d22af9, type: 3}
+  medium: {fileID: 7131633782281494596, guid: eef8f338bed06cb44ae303dca50f6a89, type: 3}
+  big: {fileID: 1891807491225258048, guid: 307f1197477446342b9fa75c65e29cc6, type: 3}
+  boss: {fileID: 5524060872724472000, guid: dc00c58b7167067468c0a68f64e99511, type: 3}
+  corridor: {fileID: 1315495006764615020, guid: e210a4c151a308445beeb116897d8227,
     type: 3}
 --- !u!4 &854751055
 Transform:
