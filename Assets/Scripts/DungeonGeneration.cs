@@ -345,6 +345,7 @@ public class DungeonGeneration : MonoBehaviour
             floorBehaviour.south = room.south;
             floorBehaviour.east = room.east;
             floorBehaviour.west = room.west;
+            floorBehaviour.type = room.type;
         }
     }
 }
